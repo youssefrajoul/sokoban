@@ -1,8 +1,13 @@
+#world{
+    display: flex;
+    flex-direction: row;
+}
+
 footer {
     position: absolute;
     top: 100%;
 }
-.square {
+.sol {
     background-color: greenyellow;
     height: 30px;
     width: 30px;
