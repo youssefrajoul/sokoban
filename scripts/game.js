@@ -3,7 +3,9 @@
  * @param {number} level
  */
  function buildLevel(level) {
+    const div = $("<div>");
+    
     for (let i = 0; i < levels[level].map.length; i++) {
-        console.log(levels[level].map[i]);
+        $("#world").append($("<div>").append($("<div>").append(levels[level].map[i])));
     }
 }
