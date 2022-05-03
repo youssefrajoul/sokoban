@@ -1,4 +1,11 @@
-#world{
+#world {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#world > div{
     display: flex;
     flex-direction: row;
 }
@@ -8,37 +15,37 @@ footer {
     top: 100%;
 }
 .sol {
-    background-color: greenyellow;
-    height: 30px;
-    width: 30px;
-}
-
-.joueur {
-    background-color: rgb(97, 25, 25);
-    height: 30px;
-    width: 30px;
-}
-
-.cible {
-    background-color: rgb(230, 109, 109);
-    height: 30px;
-    width: 30px;
-}
-
-.boite {
     background-color: blue;
     height: 30px;
     width: 30px;
 }
 
+.joueur {
+    background-color: rgb(161, 70, 70);
+    height: 30px;
+    width: 30px;
+}
+
+.cible {
+    background-color: rgb(25, 216, 25);
+    height: 30px;
+    width: 30px;
+}
+
+.boite {
+    background-color: yellow;
+    height: 30px;
+    width: 30px;
+}
+
 .boite-sur-cible {
-    background-color: rgb(115, 17, 180);
+    background-color: red;
     height: 30px;
     width: 30px;
 }
 
 .mur {
-    background-color: black;
+    background-color: rgb(195, 195, 195);
     height: 30px;
     width: 30px;
 }
