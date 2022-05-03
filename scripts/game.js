@@ -1,10 +1,10 @@
+"use strict";
+
 /**
  * This function display map from levels Object in browser console
  * @param {number} level
  */
- function buildLevel(level) {
-    
-    
+function buildLevel(level) {
     for (let i = 0; i < levels[level].map.length; i++) {
         const div = $("<div>");
 
@@ -14,10 +14,8 @@
                 $("#world").append(div);
             //$("#world").append($("<div>").append($("<div>").addClass(`${square}`)));
         }
-        
     }
 }
-
 
 const squaresMap = new Map([
     ["🧍", "joueur"],
@@ -25,4 +23,4 @@ const squaresMap = new Map([
     ["#", "boite"],
     ["@", "boite-sur-cible"],
     [" ", "sol"],
-  ]);
+]);
