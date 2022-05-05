@@ -1,3 +1,9 @@
+#compteur {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 #world {
     position: absolute;
     left: 50%;
@@ -13,6 +19,11 @@
 footer {
     position: absolute;
     top: 100%;
+}
+
+.container {
+    height: 30px;
+    width: 30px;
 }
 
 .sol {
@@ -39,7 +50,7 @@ footer {
     width: 30px;
 }
 
-.boite-sur-cible {
+.cible.boite {
     background-color: red;
     height: 30px;
     width: 30px;

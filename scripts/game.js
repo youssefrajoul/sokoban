@@ -8,18 +8,10 @@ function buildLevel(level) {
     for (let i = 0; i < levels[level].map.length; i++) {
         const div = $("<div>");
 
-        for (let j of levels[level].map[i]) {
-            let square = squaresMap.get(j) ?? "mur";
-            if (square === "boite" || square === "joueur") {
-                div.append($("<div>").addClass(`sol ${square}`))
-                $("#world").append(div);
-            } else if (square === "boite-sur-cible") {
-                div.append($("<div>").addClass(`cible ${square}`))
-                $("#world").append(div);
-            } else {
-                div.append($("<div>").addClass(square))
-                $("#world").append(div);
-            }
+        for (const j of levels[level].map[i]) {
+            const square = squaresMap.get(j) ?? "mur";
+            div.append($("<div>").addClass(`container ${square}`));
+            $("#world").append(div);
         }
     }
 }
@@ -42,6 +34,9 @@ function getPlayerPosition() {
     };
 }
 
+/**
+ * @param {any} pos
+ */
 function getSquareAt(pos) {
     const x = pos.x;
     const y = pos.y;
@@ -56,6 +51,17 @@ const directions = new Map([
     ["ArrowRight", {dx: 1, dy: 0}],
 ]);
 
+let incrMoves = 0;
+function incMoves() {
+    incrMoves++;
+    $("#compteur").text(`Steps : ${incrMoves}`);
+}
+
+buildLevel(6);
+
+/**
+ * @param {KeyboardEvent} e
+ */
 function move(e) {
     const position = {
         x: getPlayerPosition().x,
@@ -75,37 +81,48 @@ function move(e) {
         newPosition.y += dir.dy;
         secondPosition.x += 2 * dir.dx;
         secondPosition.y += 2 * dir.dy;
-        console.log(secondPosition);
-    }
-
-    if (getSquareAt(newPosition).hasClass("boite-sur-cible") && getSquareAt(secondPosition).hasClass("cible") && !getSquareAt(secondPosition).hasClass("boite-sur-cible")) {
-        getSquareAt(position).removeClass("joueur");
-        getSquareAt(newPosition).removeClass("boite-sur-cible");
-        getSquareAt(newPosition).addClass("joueur");
-        getSquareAt(secondPosition).addClass("boite-sur-cible");
-    } else if (getSquareAt(newPosition).hasClass("boite-sur-cible") && getSquareAt(secondPosition).hasClass("sol")) {
-        getSquareAt(position).removeClass("joueur");
-        getSquareAt(newPosition).addClass("joueur");
-        getSquareAt(newPosition).removeClass("boite-sur-cible");
-        getSquareAt(secondPosition).addClass("boite");
-    } else if (getSquareAt(newPosition).hasClass("boite") && getSquareAt(secondPosition).hasClass("cible") && !getSquareAt(secondPosition).hasClass("boite-sur-cible")) {
-        getSquareAt(position).removeClass("joueur");
-        getSquareAt(newPosition).removeClass("boite");
-        getSquareAt(newPosition).addClass("joueur");
-        getSquareAt(secondPosition).addClass("boite-sur-cible");
-    } else if (getSquareAt(newPosition).hasClass("boite") && !getSquareAt(secondPosition).hasClass("boite") && !getSquareAt(secondPosition).hasClass("boite-sur-cible") && getSquareAt(secondPosition).hasClass("sol")) {
-        getSquareAt(position).removeClass("joueur");
-        getSquareAt(newPosition).removeClass("boite");
-        getSquareAt(newPosition).addClass("joueur");
-        getSquareAt(secondPosition).addClass("boite");
-    } else if (getSquareAt(newPosition).hasClass("cible") && !getSquareAt(newPosition).hasClass("boite-sur-cible")) {
-        getSquareAt(position).removeClass("joueur");
-        getSquareAt(newPosition).addClass("joueur");
-    } else if (getSquareAt(newPosition).hasClass("sol") && !getSquareAt(newPosition).hasClass("boite")) {
-        getSquareAt(position).removeClass("joueur");
-        getSquareAt(newPosition).addClass("joueur");
+        if (checkVide(newPosition)) {
+            getSquareAt(newPosition)
+                .addClass("joueur");
+            getSquareAt(position)
+                .removeClass("joueur")
+                .addClass("sol");
+            incMoves();
+        } else if (checkBoite(newPosition) && checkVide(secondPosition)) {
+            getSquareAt(position)
+                .removeClass("joueur")
+                .addClass("sol");
+            getSquareAt(newPosition)
+                .removeClass("boite")
+                .addClass("joueur");
+            getSquareAt(secondPosition)
+                .addClass("boite");
+            incMoves();
+        }
     }
 }
+
+/**
+ * @param {any} position
+ */
+function checkMur(position) {
+    return getSquareAt(position).hasClass("mur");
+}
+
+/**
+ * @param {any} position
+ */
+function checkBoite(position) {
+    return getSquareAt(position).hasClass("boite");
+}
+
+/**
+ * @param {any} position
+ */
+function checkVide(position) {
+    return (!checkBoite(position) && !checkMur(position));
+}
+
 window.addEventListener("keydown", (e) => {
     move(e);
 });
