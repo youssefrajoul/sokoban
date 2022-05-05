@@ -1,7 +1,13 @@
+#info {
+    text-align: center;
+}
+
+#parag {
+    text-align: center;
+}
+
 #compteur {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
+    text-align: center;
 }
 
 #world {
@@ -18,7 +24,9 @@
 
 footer {
     position: absolute;
-    top: 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .container {
@@ -51,6 +59,12 @@ footer {
 }
 
 .cible.boite {
+    background-color: red;
+    height: 30px;
+    width: 30px;
+}
+
+.boite-sur-cible {
     background-color: red;
     height: 30px;
     width: 30px;

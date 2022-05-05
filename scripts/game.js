@@ -20,7 +20,7 @@ const squaresMap = new Map([
     ["🧍", "joueur"],
     ["x", "cible"],
     ["#", "boite"],
-    ["@", "boite-sur-cible"],
+    ["@", "cible boite"],
     [" ", "sol"],
 ]);
 
@@ -53,11 +53,9 @@ const directions = new Map([
 
 let incrMoves = 0;
 function incMoves() {
-    incrMoves++;
     $("#compteur").text(`Steps : ${incrMoves}`);
+    incrMoves++;
 }
-
-buildLevel(6);
 
 /**
  * @param {KeyboardEvent} e
@@ -76,29 +74,33 @@ function move(e) {
         x: position.x,
         y: position.y,
     };
-    if (dir) {
+    if (dir && fin) {
         newPosition.x += dir.dx;
         newPosition.y += dir.dy;
         secondPosition.x += 2 * dir.dx;
         secondPosition.y += 2 * dir.dy;
-        if (checkVide(newPosition)) {
+        if (checkSiVide(newPosition)) {
             getSquareAt(newPosition)
                 .addClass("joueur");
             getSquareAt(position)
                 .removeClass("joueur")
                 .addClass("sol");
             incMoves();
-        } else if (checkBoite(newPosition) && checkVide(secondPosition)) {
+        } else if (checkBoite(newPosition) && checkSiVide(secondPosition)) {
             getSquareAt(position)
                 .removeClass("joueur")
                 .addClass("sol");
             getSquareAt(newPosition)
                 .removeClass("boite")
+                .removeClass("boite-sur-cible")
                 .addClass("joueur");
             getSquareAt(secondPosition)
                 .addClass("boite");
             incMoves();
         }
+    }
+    if (allOnTarget() && fin) {
+        finishLevel();
     }
 }
 
@@ -119,9 +121,56 @@ function checkBoite(position) {
 /**
  * @param {any} position
  */
-function checkVide(position) {
-    return (!checkBoite(position) && !checkMur(position));
+function checkSiVide(position) {
+    return !checkBoite(position) && !checkMur(position);
 }
+
+function allOnTarget() {
+    let allOnTargetBoolean = true;
+    $(".cible").each(function(i) {
+        if (!$(this).hasClass("boite")) {
+            allOnTargetBoolean = false;
+        }
+    });
+    return allOnTargetBoolean;
+}
+
+let fin = true;
+/**
+ * @param {KeyboardEvent} e
+ */
+function finishLevel() {
+    $(document).off("keypress");
+    $("#parag").append("!! Press space to go to the next Level !!");
+    fin = false;
+    window.addEventListener("keydown", (e) => {
+        if (allOnTarget()) {
+            if (e.keyCode === 32) {
+                levelCounter++;
+                initLevel(levelCounter);
+            }
+        }
+    });
+}
+
+let levelCounter = 0;
+
+/**
+ * @param {any} level
+ */
+function initLevel(level) {
+    incrMoves = 0;
+    $("#world").empty();
+    $("#parag").empty();
+    $("#info").text(`Level : ${level}`);
+    incMoves();
+    buildLevel(level);
+    fin = true;
+}
+
+buildLevel(levelCounter);
+incMoves();
+$("#info").text(`Level : ${levelCounter}`);
 
 window.addEventListener("keydown", (e) => {
     move(e);
