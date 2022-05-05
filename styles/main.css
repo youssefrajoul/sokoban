@@ -14,14 +14,15 @@ footer {
     position: absolute;
     top: 100%;
 }
+
 .sol {
     background-color: blue;
     height: 30px;
     width: 30px;
 }
 
-.joueur {
-    background-color: rgb(161, 70, 70);
+.mur {
+    background-color: rgb(195, 195, 195);
     height: 30px;
     width: 30px;
 }
@@ -44,8 +45,8 @@ footer {
     width: 30px;
 }
 
-.mur {
-    background-color: rgb(195, 195, 195);
+.joueur {
+    background-color: rgb(161, 70, 70);
     height: 30px;
     width: 30px;
 }

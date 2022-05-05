@@ -24,3 +24,20 @@ const squaresMap = new Map([
     ["@", "boite-sur-cible"],
     [" ", "sol"],
 ]);
+
+function getPlayerPosition() {
+    const p = $("#world > div > .joueur");
+    const x = p.index();
+    const y = p.parent().index();
+    return {
+        x: x,
+        y: y,
+    };
+}
+
+function getSquareAt(pos) {
+    const x = pos.x;
+    const y = pos.y;
+    const squarePos = $(`#world > div:eq(${y}) > :eq(${x})`);
+    return squarePos;
+}
