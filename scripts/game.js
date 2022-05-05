@@ -11,8 +11,7 @@ function buildLevel(level) {
         for (let j of levels[level].map[i]) {
             let square = squaresMap.get(j) ?? "mur";
             div.append($("<div>").addClass(square))
-                $("#world").append(div);
-            //$("#world").append($("<div>").append($("<div>").addClass(`${square}`)));
+            $("#world").append(div);
         }
     }
 }
@@ -41,3 +40,39 @@ function getSquareAt(pos) {
     const squarePos = $(`#world > div:eq(${y}) > :eq(${x})`);
     return squarePos;
 }
+
+const directions = new Map([
+    ["ArrowUp", {dx: 0, dy: -1}],
+    ["ArrowDown", {dx: 0, dy: 1}],
+    ["ArrowLeft", {dx: -1, dy: 0}],
+    ["ArrowRight", {dx: 1, dy: 0}],
+]);
+
+let compteurDebut = 0;
+
+function move(e) {
+    const position = {
+        x: getPlayerPosition().x,
+        y: getPlayerPosition().y,
+    };
+    const dir = directions.get(e.key);
+    const newPosition = {
+        x: position.x,
+        y: position.y,
+    };
+    if (dir) {
+        newPosition.x += dir.dx;
+        newPosition.y += dir.dy;
+    }
+    if (compteurDebut === 0) {
+        getSquareAt(position).removeClass();
+        getSquareAt(position).addClass("sol");
+        getSquareAt(position).addClass("joueur");
+    }
+    getSquareAt(position).removeClass("joueur");
+    getSquareAt(newPosition).addClass("joueur");
+    compteurDebut++;
+}
+window.addEventListener("keydown", (e) => {
+    move(e);
+});
