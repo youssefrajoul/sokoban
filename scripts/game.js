@@ -140,12 +140,14 @@ let fin = true;
  * @param {KeyboardEvent} e
  */
 function finishLevel() {
-    $(document).off("keypress");
     $("#parag").append("!! Press space to go to the next Level !!");
+    if (levelCounter === 6) {
+        afficheEnd();
+    }
     fin = false;
     window.addEventListener("keydown", (e) => {
         if (allOnTarget()) {
-            if (e.keyCode === 32) {
+            if (e.keyCode === 32 && levelCounter < 6) {
                 levelCounter++;
                 initLevel(levelCounter);
             }
@@ -153,7 +155,7 @@ function finishLevel() {
     });
 }
 
-let levelCounter = 0;
+let levelCounter = 6;
 
 /**
  * @param {any} level
@@ -165,6 +167,12 @@ function initLevel(level) {
     $("#info").text(`Level : ${level}`);
     incMoves();
     buildLevel(level);
+    fin = true;
+}
+
+function afficheEnd() {
+    $("#parag").empty();
+    $("#parag").append("!! CONGRATULATIONS !!! YOU DID IT. YOU HAVE SUCCESSFULLY COMPLETED THE SOKOBAN GAME !!");
     fin = true;
 }
 
