@@ -69,8 +69,10 @@ function move(e) {
         getSquareAt(position).addClass("sol");
         getSquareAt(position).addClass("joueur");
     }
-    getSquareAt(position).removeClass("joueur");
-    getSquareAt(newPosition).addClass("joueur");
+    if (!getSquareAt(newPosition).hasClass("mur")) {
+        getSquareAt(position).removeClass("joueur");
+        getSquareAt(newPosition).addClass("joueur");
+    }
     compteurDebut++;
 }
 window.addEventListener("keydown", (e) => {
