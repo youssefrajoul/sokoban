@@ -10,8 +10,16 @@ function buildLevel(level) {
 
         for (let j of levels[level].map[i]) {
             let square = squaresMap.get(j) ?? "mur";
-            div.append($("<div>").addClass(square))
-            $("#world").append(div);
+            if (square === "boite" || square === "joueur") {
+                div.append($("<div>").addClass(`sol ${square}`))
+                $("#world").append(div);
+            } else if (square === "boite-sur-cible") {
+                div.append($("<div>").addClass(`cible ${square}`))
+                $("#world").append(div);
+            } else {
+                div.append($("<div>").addClass(square))
+                $("#world").append(div);
+            }
         }
     }
 }
@@ -25,7 +33,7 @@ const squaresMap = new Map([
 ]);
 
 function getPlayerPosition() {
-    const p = $("#world > div > .joueur");
+    const p = $("#world > div .joueur");
     const x = p.index();
     const y = p.parent().index();
     return {
@@ -37,7 +45,7 @@ function getPlayerPosition() {
 function getSquareAt(pos) {
     const x = pos.x;
     const y = pos.y;
-    const squarePos = $(`#world > div:eq(${y}) > :eq(${x})`);
+    const squarePos = $(`#world > div:eq(${y}) > div:eq(${x})`);
     return squarePos;
 }
 
@@ -47,8 +55,6 @@ const directions = new Map([
     ["ArrowLeft", {dx: -1, dy: 0}],
     ["ArrowRight", {dx: 1, dy: 0}],
 ]);
-
-let compteurDebut = 0;
 
 function move(e) {
     const position = {
@@ -60,20 +66,45 @@ function move(e) {
         x: position.x,
         y: position.y,
     };
+    const secondPosition = {
+        x: position.x,
+        y: position.y,
+    };
     if (dir) {
         newPosition.x += dir.dx;
         newPosition.y += dir.dy;
+        secondPosition.x += 2 * dir.dx;
+        secondPosition.y += 2 * dir.dy;
+        console.log(secondPosition);
     }
-    if (compteurDebut === 0) {
-        getSquareAt(position).removeClass();
-        getSquareAt(position).addClass("sol");
-        getSquareAt(position).addClass("joueur");
-    }
-    if (!getSquareAt(newPosition).hasClass("mur")) {
+
+    if (getSquareAt(newPosition).hasClass("boite-sur-cible") && getSquareAt(secondPosition).hasClass("cible") && !getSquareAt(secondPosition).hasClass("boite-sur-cible")) {
+        getSquareAt(position).removeClass("joueur");
+        getSquareAt(newPosition).removeClass("boite-sur-cible");
+        getSquareAt(newPosition).addClass("joueur");
+        getSquareAt(secondPosition).addClass("boite-sur-cible");
+    } else if (getSquareAt(newPosition).hasClass("boite-sur-cible") && getSquareAt(secondPosition).hasClass("sol")) {
+        getSquareAt(position).removeClass("joueur");
+        getSquareAt(newPosition).addClass("joueur");
+        getSquareAt(newPosition).removeClass("boite-sur-cible");
+        getSquareAt(secondPosition).addClass("boite");
+    } else if (getSquareAt(newPosition).hasClass("boite") && getSquareAt(secondPosition).hasClass("cible") && !getSquareAt(secondPosition).hasClass("boite-sur-cible")) {
+        getSquareAt(position).removeClass("joueur");
+        getSquareAt(newPosition).removeClass("boite");
+        getSquareAt(newPosition).addClass("joueur");
+        getSquareAt(secondPosition).addClass("boite-sur-cible");
+    } else if (getSquareAt(newPosition).hasClass("boite") && !getSquareAt(secondPosition).hasClass("boite") && !getSquareAt(secondPosition).hasClass("boite-sur-cible") && getSquareAt(secondPosition).hasClass("sol")) {
+        getSquareAt(position).removeClass("joueur");
+        getSquareAt(newPosition).removeClass("boite");
+        getSquareAt(newPosition).addClass("joueur");
+        getSquareAt(secondPosition).addClass("boite");
+    } else if (getSquareAt(newPosition).hasClass("cible") && !getSquareAt(newPosition).hasClass("boite-sur-cible")) {
+        getSquareAt(position).removeClass("joueur");
+        getSquareAt(newPosition).addClass("joueur");
+    } else if (getSquareAt(newPosition).hasClass("sol") && !getSquareAt(newPosition).hasClass("boite")) {
         getSquareAt(position).removeClass("joueur");
         getSquareAt(newPosition).addClass("joueur");
     }
-    compteurDebut++;
 }
 window.addEventListener("keydown", (e) => {
     move(e);
