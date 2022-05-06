@@ -7,12 +7,17 @@ class State {
 
     
     /**
-     * @param {{ x: number; y: number; }} playerPos
+     * @param {{x: number;y: number;}} playerPos
+     * @param {{x: number;y: number;}} boxPosition
      */
-    constructor(playerPos) {
+    constructor(playerPos, boxPosition) {
         this.#playerPosition = {
             x : playerPos.x,
             y : playerPos.y,
+        };
+        this.#boxPosition = {
+            x : boxPosition.x,
+            y : boxPosition.y,
         };
     }
 
@@ -28,7 +33,7 @@ class State {
     }
 }
 
-const s = new State({x:1, y:2});
+const s = new State({x:1, y:2}, {x:4, y:5});
 const pos = s.playerPosition;
 pos.x = 20;
 console.log(s.playerPosition); // réponse correcte { x: 1, y: 2 }

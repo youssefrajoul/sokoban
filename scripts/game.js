@@ -1,5 +1,6 @@
 "use strict";
 
+let states = [];
 /**
  * This function display map from levels Object in browser console
  * @param {number} level
@@ -75,7 +76,8 @@ function move(e) {
         x: position.x,
         y: position.y,
     };
-    if (dir && fin) {
+    states.push(getSquareAt(position));
+    if (dir && !fin) {
         newPosition.x += dir.dx;
         newPosition.y += dir.dy;
         secondPosition.x += 2 * dir.dx;
@@ -88,6 +90,7 @@ function move(e) {
                 .addClass("sol");
             incMoves();
         } else if (checkBoite(newPosition) && checkSiVide(secondPosition)) {
+            states.push(getSquareAt(newPosition));
             getSquareAt(position)
                 .removeClass("joueur")
                 .addClass("sol");
@@ -100,7 +103,7 @@ function move(e) {
             incMoves();
         }
     }
-    if (allOnTarget() && fin) {
+    if (allOnTarget() && !fin) {
         finishLevel();
     }
 }
@@ -146,8 +149,8 @@ function allOnTarget() {
     });
     return allOnTargetBoolean;
 }
-
-let fin = true;
+// arreter le joueur de jouer
+let fin = false;
 /**
  * @param {KeyboardEvent} e
  */
@@ -156,7 +159,7 @@ function finishLevel() {
     if (levelCounter === 6) {
         afficheEnd();
     }
-    fin = false;
+    fin = true;
     window.addEventListener("keydown", (e) => {
         if (allOnTarget()) {
             if (e.keyCode === 32 && levelCounter < 6) {
@@ -179,13 +182,13 @@ function initLevel(level) {
     $("#info").text(`Level : ${level + 1}`);
     incMoves();
     buildLevel(level);
-    fin = true;
+    fin = false;
 }
 
 function afficheEnd() {
     $("#parag").empty();
     $("#parag").append("!! CONGRATULATIONS !!! YOU DID IT. YOU HAVE SUCCESSFULLY COMPLETED THE SOKOBAN GAME !!");
-    fin = true;
+    fin = false;
 }
 
 buildLevel(levelCounter);
