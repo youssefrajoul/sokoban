@@ -104,6 +104,17 @@ function move(e) {
     }
 }
 
+// /**
+//  * @param {KeyboardEvent} e
+//  */
+//  function playerImage (e) {
+//     if (e.keyCode === 38) {
+//         return "joueur-up";
+//     } else {
+//         return "joueur-front";
+//     }
+// }
+
 /**
  * @param {any} position
  */
@@ -155,7 +166,7 @@ function finishLevel() {
     });
 }
 
-let levelCounter = 6;
+let levelCounter = 0;
 
 /**
  * @param {any} level
@@ -164,7 +175,7 @@ function initLevel(level) {
     incrMoves = 0;
     $("#world").empty();
     $("#parag").empty();
-    $("#info").text(`Level : ${level}`);
+    $("#info").text(`Level : ${level + 1}`);
     incMoves();
     buildLevel(level);
     fin = true;
@@ -178,7 +189,7 @@ function afficheEnd() {
 
 buildLevel(levelCounter);
 incMoves();
-$("#info").text(`Level : ${levelCounter}`);
+$("#info").text(`Level : ${levelCounter + 1}`);
 
 window.addEventListener("keydown", (e) => {
     move(e);

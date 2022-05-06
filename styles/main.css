@@ -36,42 +36,50 @@ footer {
 
 .sol {
     background-color: blue;
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/ground.png");
 }
 
 .mur {
     background-color: rgb(195, 195, 195);
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/wall.png");
 }
 
 .cible {
     background-color: rgb(25, 216, 25);
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/target.png");
 }
 
 .boite {
     background-color: yellow;
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/box.png");
 }
 
 .cible.boite {
     background-color: red;
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/box-on-target.png");
 }
 
 .boite-sur-cible {
     background-color: red;
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/box-on-target.png");
 }
 
 .joueur {
     background-color: rgb(161, 70, 70);
-    height: 30px;
-    width: 30px;
+    background-image: url("/image/player-front.png");
+}
+
+.joueur-left {
+    background-color: rgb(161, 70, 70);
+    background-image: url("/image/player-left.png");
+}
+
+.joueur-right {
+    background-color: rgb(161, 70, 70);
+    background-image: url("/image/player-right.png");
+}
+
+.joueur-up {
+    background-color: rgb(161, 70, 70);
+    background-image: url("/image/player-up.png");
 }
