@@ -1,26 +1,34 @@
 "use strict";
 
 class State {
+    //@private
+    #playerPosition;
+    #boxPosition;
+
+    
     /**
-     * @param {{ (): () => any; x?: number; y?: number; }} playerPosition
-     * @param {(() => any) | undefined} [boxPosition]
-     * @private
+     * @param {{ x: number; y: number; }} playerPos
      */
-    constructor(playerPosition, boxPosition) {
-        this.playerPosition = playerPosition;
-        this.boxPosition = boxPosition;
+    constructor(playerPos) {
+        this.#playerPosition = {
+            x : playerPos.x,
+            y : playerPos.y,
+        };
     }
 
-    playerPosition() {
-        return this.playerPosition;
+    get playerPosition() {
+        return {
+            x : this.#playerPosition.x,
+            y : this.#playerPosition.y,
+        };
     }
 
-    boxPosition() {
-        return this.boxPosition;
+    get boxPosition() {
+        return this.#boxPosition;
     }
 }
 
-const s = new State({x: 1, y: 2});
+const s = new State({x:1, y:2});
 const pos = s.playerPosition;
 pos.x = 20;
 console.log(s.playerPosition); // réponse correcte { x: 1, y: 2 }
