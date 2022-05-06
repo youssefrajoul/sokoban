@@ -5,6 +5,7 @@
  * @param {number} level
  */
 function buildLevel(level) {
+    $("#world").empty();
     for (let i = 0; i < levels[level].map.length; i++) {
         const div = $("<div>");
 
@@ -190,6 +191,10 @@ function afficheEnd() {
 buildLevel(levelCounter);
 incMoves();
 $("#info").text(`Level : ${levelCounter + 1}`);
+
+$("#restart").on("click", function () {
+    initLevel(levelCounter);
+});
 
 window.addEventListener("keydown", (e) => {
     move(e);
