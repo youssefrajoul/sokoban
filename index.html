@@ -4,9 +4,11 @@
 <head>
     <meta charset="utf-8">
     <title>Sokoban – Webg2</title>
+    <link rel="stylesheet" href="styles/modal.css">
     <link rel="stylesheet" href="styles/main.css">
     <script src="scripts/jquery-3.6.0.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/image/box.png">
+  
 </head>
 <body>
     
@@ -22,9 +24,58 @@
     <div id="world">
 
     </div>
-    <button type="button" id="restart">
-        Restart
-    </button>
+    <div id="buttons">
+        <button type="button" id="restart">
+            Restart
+        </button>
+        <button id="trigger">
+            Help!
+        </button>
+    </div>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <p>
+                How to Play?
+            </p>
+            <ul>
+                <li>
+                    You are in control of the Player. The Player can move up, down, left and right:
+                </li>
+                <li>
+                    Arrow keys for movement.
+                </li>
+                <li>
+                    Space for next Level.
+                </li>
+                <li>
+                    Restart for reset.
+                </li>
+                
+            </ul>
+            <p>
+                Rules:
+            </p>
+            <p>
+                <img src="/image/help-double.png" alt="help-push">
+                Only one box can be pushed at a time.
+            </p>
+            <p>
+                <img src="/image/help-pull.png" alt="help-push">
+                A box cannot be pulled X.
+            </p>
+            <p>
+                <img src="/image/box.png" alt="help-push">
+                <img src="/image/wall.png" alt="help-push">
+                The player cannot walk through boxes or walls.
+            </p>
+            <img src="/image/help-level.png" alt="help-push">
+            <p>
+                The puzzle is solved when all boxes are on their corresponding goals.
+            </p>
+            <img src="/image/help-win.png" alt="help-push">
+        </div>
+    </div>
     <footer>
         <p>
             Youssef RAJOUL g59939 SDR
