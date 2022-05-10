@@ -156,6 +156,8 @@ let fin = false;
  */
 function finishLevel() {
     $("#parag").append("!! Press space to go to the next Level !!");
+    localStorage.setItem(`level ${levelCounter}`, `${incrMoves-1}`);
+    $("#score").text(`Your Score : ${localStorage.getItem(`level ${levelCounter}`)}`);
     if (levelCounter === 6) {
         afficheEnd();
     }
@@ -180,6 +182,12 @@ function initLevel(level) {
     $("#world").empty();
     $("#parag").empty();
     $("#info").text(`Level : ${level + 1}`);
+    if (localStorage.getItem(`level ${levelCounter}`) !== null) {
+        $("#score").text(`Your Score : ${localStorage.getItem(`level ${levelCounter}`)}`);
+    } else {
+        $("#score").text("Your Score : --");
+    }
+    $("#best-score").text(`Best Score : ${levels[levelCounter].best}`);
     incMoves();
     buildLevel(level);
     fin = false;
@@ -194,6 +202,18 @@ function afficheEnd() {
 buildLevel(levelCounter);
 incMoves();
 $("#info").text(`Level : ${levelCounter + 1}`);
+//$("#score").text(`Your Score : ${localStorage.getItem(`level ${levelCounter}`)}`);
+if (localStorage.getItem(`level ${levelCounter}`) !== null) {
+    $("#score").text(`Your Score : ${localStorage.getItem(`level ${levelCounter}`)}`);
+} else {
+    $("#score").text("Your Score : --");
+}
+
+if (levels[levelCounter].best === undefined) {
+    $("#best-score").text("Best Score : n'existe pas(comming soon)");
+} else {
+    $("#best-score").text(`Best Score : ${levels[levelCounter].best}`);
+}
 
 $("#restart").on("click", function () {
     initLevel(levelCounter);
@@ -220,3 +240,9 @@ function windowOnClick(event) {
 trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
+
+window.addEventListener("keydown", (e) => {
+    if (e.keyCode === 85) {
+        console.log("message : cc");
+    }
+});

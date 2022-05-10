@@ -23,6 +23,14 @@
     transform: translate(-50%, -50%);
 }
 
+#score {
+    text-align: center;
+}
+
+#best-score {
+    text-align: center;
+}
+
 #world > div{
     display: flex;
     flex-direction: row;
