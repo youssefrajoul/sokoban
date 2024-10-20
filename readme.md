@@ -53,10 +53,11 @@ This is a simple Sokoban web game developed during the first year of my bachelor
 
 If you'd like to contribute to this project, feel free to fork the repository and submit a pull request. Any improvements or suggestions are welcome.
 
-## Author
+## Authors and acknowledgment
 
 - Youssef Rajoul
   - Developed at [**HE2B-ESI**](https://he2b.be/) during the first year of my bachelor's degree.
+  - Special thanks to **Sébastien Drobisz** for guidance and support throughout the project.
   - **Email:** youssefrajoul27@gmail.com
 
 ## Contact
